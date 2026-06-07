@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Spin Wheel Game</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    .wheel-container {
+      position: relative;
+      margin: 40px auto;
+      width: 250px;
+      height: 250px;
+    }
+
+    .wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 5px solid white;
+      background: conic-gradient(
+        #ff4757 0% 50%,
+        #1e90ff 50% 100%
+      );
+      transition: transform 3s ease-out;
+    }
+
+    .pointer {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 30px;
+    }
+
+    button {
+      padding: 15px 25px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background: #22c55e;
+      color: white;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🎡 Spin the Wheel</h1>
+
+<div class="wheel-container">
+  <div class="pointer">⬇</div>
+  <div class="wheel" id="wheel"></div>
+</div>
+
+<button onclick="spin()">SPIN</button>
+
+<div id="result"></div>
+
+<script>
+let wheel = document.getElementById("wheel");
+
+const truths = [
+  "Who do you like here?",
+  "What’s your biggest secret?",
+  "Have you lied to someone here?",
+  "Who is your crush?"
+];
+
+const dares = [
+  "Send a voice note now",
+  "Dance and post it",
+  "Call someone and confess",
+  "Change your DP for 1 hour"
+];
+
+function spin() {
+  let randomDegree = Math.floor(3000 + Math.random() * 2000);
+  wheel.style.transform = "rotate(" + randomDegree + "deg)";
+
+  setTimeout(() => {
+    let resultType = (randomDegree % 360) < 180 ? "Truth" : "Dare";
+    let question;
+
+    if (resultType === "Truth") {
+      question = truths[Math.floor(Math.random() * truths.length)];
+    } else {
+      question = dares[Math.floor(Math.random() * dares.length)];
+    }
+
+    document.getElementById("result").innerHTML =
+      "<h2>" + resultType + "</h2><p>" + question + "</p>";
+  }, 3000);
+}
+</script>
+
+</body>
+</html>
